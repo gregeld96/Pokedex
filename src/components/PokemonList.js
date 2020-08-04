@@ -1,30 +1,28 @@
 import React from 'react';
-import { Row, Col, Button, Image} from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
+import Pokemon from './Pokemon'
 
-class PokemonList extends React.Component {
+function PokemonList ({ pokemons, loading, error }) {
 
-    render() { 
-        const { pokemons } = this.props
-
-        return (  
-            <>
-                <Row md={3} lg={4}>
-                    {
-                        pokemons.map(pokemon => {
-                            return (
-                                <Col key={pokemon.id}>
-                                    <div className="d-flex flex-column mb-5">
-                                        <Image src={pokemon.imageUrl} className="pb-2 Card-size mx-auto"/>
-                                        <Button className="w-50 mx-auto">Add to favorite</Button>
-                                    </div>
-                                </Col>
-                            )
-                        }) 
-                    }
-                </Row>
-            </>
-        );
-    }
+    return (  
+        <>
+            {
+                loading && <h1 className="text-center">Loading....</h1>
+            }
+            <Row md={3} lg={4}>
+                {   
+                    pokemons && pokemons.map(pokemon => {
+                        return (
+                            <Pokemon key={pokemon.id} pokemon={pokemon} />
+                        )
+                    }) 
+                }
+            </Row>
+            {
+                error && <h4>{error.message}</h4>
+            }
+        </>
+    );
 }
  
 export default PokemonList;

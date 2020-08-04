@@ -1,36 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 
-class NavigationBar extends React.Component {
+function NavigationBar ({ filterPokemon }) {
     
-    constructor () {
-        super()
-        this.state = {
-            searchInput: ""
-        }
-    }
+    const [searchInput, setSearchInput] = useState("")
 
-    handleInputChange = (event) => {
-        console.log(event.target.value)
-        this.setState({
-          searchInput: event.target.value
-        })
+    const handleInputChange = (event) => {
+        setSearchInput(event.target.value)
     }
     
-    handleOnSubmit = (event) => {
+    const handleOnSubmit = (event) => {
         event.preventDefault()
-        const name = this.state.searchInput
-        // alert(name)
-        fetch(`https://api.pokemontcg.io/v1/cards?name=${name}`)
-        .then(res => res.json())
-        .then(data => {
-            this.props.filterPokemon(data.cards)
-        })
-        .catch(console.log())
+        filterPokemon(searchInput)
     }
-
-    render() { 
-        const { searchInput } = this.state
 
         return (  
             <>
@@ -49,15 +31,14 @@ class NavigationBar extends React.Component {
                                 <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
-                        <Form onSubmit={this.handleOnSubmit} inline>
-                            <FormControl type="text" placeholder="Search" className="mr-sm-2" value={searchInput} onChange={this.handleInputChange}/>
+                        <Form onSubmit={handleOnSubmit} inline>
+                            <FormControl type="text" placeholder="Search" className="mr-sm-2" value={searchInput} onChange={handleInputChange}/>
                             <Button type="submit" variant="primary">Search</Button>
                         </Form>
                     </Navbar.Collapse>
                 </Navbar>
             </>
         );
-    }
 }
  
 export default NavigationBar;
