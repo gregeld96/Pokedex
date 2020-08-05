@@ -1,51 +1,47 @@
-import React, { useState } from 'react';
-import './App.css';
-import PokemonList from './components/PokemonList'
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from 'react-router-dom'
 import Navbar from './components/Navbar'
-import useFetch from './hooks/useFetch'
-import Pagination from './components/Pagination'
+import {
+  Home,
+  CardList,
+  Favorites,
+  Pokemon,
+  Trainer,
+  Energy
+} from './pages'
 
 function App () {
-  
-  let filter = null
-  const [page, setPage] = useState(1)
-  const [name, setName] = useState(null)
-
-
-  if (name) {
-    filter = name
-  } else {
-    filter = page
-  }
-
-  const {data: pokemons, loading, error} = useFetch(`${filter}`)
-
-  const handlePageChange = (event) => {
-    setPage(event.target.value)
-  }
-
-  const filterPokemon = (name) => {
-    setName(name)
-  }
-
-  const plus = () => {
-    const newPage =  Number(page) + 1
-    setName(null)
-    setPage(newPage)
-  }
-
-  const minus = () => {
-    const newPage =  Number(page) - 1
-    setName(null)
-    setPage(newPage)
-  }
-
   return (
-    <>
-      <Navbar filterPokemon={filterPokemon}></Navbar>
-      <Pagination minus={minus} plus={plus} handlePageChange={handlePageChange} page={page}></Pagination>
-      <PokemonList pokemons={pokemons} error={error} loading={loading}></PokemonList>
-    </>
+    <Router>
+      <div>
+        <Navbar></Navbar>
+
+        <Switch>
+          <Route path="/cardlist/trainer">
+            <Trainer />
+          </Route>
+          <Route path="/cardlist/energy">
+            <Energy />
+          </Route>
+          <Route path="/cardlist/pokemon">
+            <Pokemon />
+          </Route>
+          <Route path="/cardlist">
+            <CardList />
+          </Route>
+          <Route path="/favorites">
+            <Favorites />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   )
 }
 
