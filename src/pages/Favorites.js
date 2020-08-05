@@ -1,8 +1,14 @@
 import React from 'react'
+import { useSelector } from "react-redux"
+import PokemonList from '../components/PokemonList'
 
 function Favorite () {
+    const pokemons = useSelector(state => state.pokemons)
+
+    const newPokemons = [...new Set(pokemons)]
+
     return (
-        <h1>Favorite PAGE</h1>
+        <PokemonList pokemons={newPokemons} />
     )
 }
 

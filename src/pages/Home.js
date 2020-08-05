@@ -1,39 +1,30 @@
-import React from 'react';
-import { Jumbotron, Button } from 'react-bootstrap'
-import { useHistory } from "react-router-dom";
+import React, { useState } from 'react';
+import PokemonList from '../components/PokemonList'
+import useFetch from '../hooks/useFetch'
+import Pagination from '../components/Pagination'
 
 function Home () {
-  let history = useHistory();
+  
+  const [page, setPage] = useState(1)
 
-  function allCard () {
-    history.push('/cardlist')
+  const {data: pokemons, loading, error} = useFetch(`https://api.pokemontcg.io/v1/cards?page=${page}`, page)
+
+  const plus = () => {
+    const newPage =  Number(page) + 1
+    setPage(newPage)
   }
 
-  function pokemon () {
-    history.push('/cardlist/pokemon')
+  const minus = () => {
+    const newPage =  Number(page) - 1
+    setPage(newPage)
   }
 
-  function trainer () {
-    history.push('/cardlist/trainer')
-  }
-
-  function energy () {
-    history.push('/cardlist/energy')
-  }
-
+  if (loading) return (<h1 className="text-center">Loading....</h1>)
   return (
-    <div className="container">
-        <Jumbotron>
-            <h1 className="text-center">Welcome to Pokedex Master</h1>
-            <p className="text-center"> Find your favorite pokemons, trainers, and energies card, and design your deck to your pokemon glory.</p>
-            <div className="d-flex justify-content-center">
-                <Button variant="primary" className="m-2" onClick={allCard}>All Card</Button>
-                <Button variant="primary" className="m-2" onClick={pokemon}>Pokemon</Button>
-                <Button variant="primary" className="m-2" onClick={trainer}>Trainer</Button>
-                <Button variant="primary" className="m-2" onClick={energy}>Energy</Button>
-            </div>
-        </Jumbotron>
-    </div>
+    <>
+      <PokemonList pokemons={pokemons} error={error} loading={loading}></PokemonList>
+      <Pagination minus={minus} plus={plus} page={page}></Pagination>
+    </>
   )
 }
 

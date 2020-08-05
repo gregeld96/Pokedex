@@ -7,12 +7,11 @@ import {
 import Navbar from './components/Navbar'
 import {
   Home,
-  CardList,
   Favorites,
-  Pokemon,
-  Trainer,
-  Energy
+  Supertype,
+  CardDetail
 } from './pages'
+import './App.css';
 
 function App () {
   return (
@@ -21,22 +20,16 @@ function App () {
         <Navbar></Navbar>
 
         <Switch>
-          <Route path="/cardlist/trainer">
-            <Trainer />
+          <Route path="/pokemons/:id">
+            <CardDetail />
           </Route>
-          <Route path="/cardlist/energy">
-            <Energy />
-          </Route>
-          <Route path="/cardlist/pokemon">
-            <Pokemon />
-          </Route>
-          <Route path="/cardlist">
-            <CardList />
-          </Route>
-          <Route path="/favorites">
+          <Route exact path="/favorites">
             <Favorites />
           </Route>
-          <Route path="/">
+          <Route exact path="/:name">
+            <Supertype />
+          </Route>
+          <Route exact path="/">
             <Home />
           </Route>
         </Switch>

@@ -1,27 +1,24 @@
 import { useState, useEffect } from 'react'
 
-function useFetch (component) {
+function useFetch (url, value1, value2, value3) {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
-    let url = null
-
-    if(isNaN(component)){
-        url = "https://api.pokemontcg.io/v1/cards?name="
-    } else {
-        url = "https://api.pokemontcg.io/v1/cards?page="
-    }
 
     useEffect(() => {
         setLoading(true)
-        fetch(url+component)
+        fetch(url)
         .then(res => res.json())
         .then(responseData => {
-          setData(responseData.cards)
+          if (value1 === "id"){
+            setData(responseData.card)
+          } else {
+            setData(responseData.cards)
+          }
         })
         .catch(err => setError(err))
         .finally(_ => setLoading(false))
-      }, [component])
+      }, [value1, value2, value3])
     
     return {
         data,

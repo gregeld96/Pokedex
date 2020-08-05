@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
-function NavigationBar ({ filterPokemon }) {
+function NavigationBar () {
     
+    const history = useHistory()
     const [searchInput, setSearchInput] = useState("")
 
     const handleInputChange = (event) => {
@@ -12,19 +13,32 @@ function NavigationBar ({ filterPokemon }) {
     
     const handleOnSubmit = (event) => {
         event.preventDefault()
-        filterPokemon(searchInput)
+        history.push(`/${searchInput}`)
+    }
+
+    function superTypeLink (name) {
+        history.push(`/${name}`)
+    }
+
+    function favorite () {
+        history.push(`/favorites`)
+    }
+
+    function home () {
+        history.push(`/`)
     }
 
         return (  
             <>
                 <Navbar bg="dark" expand="lg" variant="dark" className="mb-3">
-                    <Navbar.Brand href="#home">Pokedex Master</Navbar.Brand>
+                    <Navbar.Brand onClick={() => home()}>Pokedex Master</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
-                            <Nav.Link><Link to="/">Home</Link></Nav.Link>
-                            <Nav.Link><Link to="/cardlist">Card List</Link></Nav.Link>
-                            <Nav.Link><Link to="/favorites">Favorites</Link></Nav.Link>
+                            <Nav.Link onClick={() => superTypeLink("pokemons")}>Pokemon</Nav.Link>
+                            <Nav.Link onClick={() => superTypeLink("trainers")}>Trainer</Nav.Link>
+                            <Nav.Link onClick={() => superTypeLink("energies")}>Energy</Nav.Link>
+                            <Nav.Link onClick={() => favorite()}>Favorites</Nav.Link>
                         </Nav>
                         <Form onSubmit={handleOnSubmit} inline>
                             <FormControl type="text" placeholder="Search" className="mr-sm-2" value={searchInput} onChange={handleInputChange}/>

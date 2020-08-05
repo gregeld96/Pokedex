@@ -1,19 +1,18 @@
 import React from 'react';
-import { Row } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import Pokemon from './Pokemon'
 
-function PokemonList ({ pokemons, loading, error }) {
-
+function PokemonList ({ pokemons, error }) {
     return (  
         <>
-            {
-                loading && <h1 className="text-center">Loading....</h1>
-            }
-            <Row md={3} lg={4}>
+            <Row md={3} lg={3}>
+                
                 {   
                     pokemons && pokemons.map(pokemon => {
                         return (
-                            <Pokemon key={pokemon.id} pokemon={pokemon} />
+                            <Col>
+                                <Pokemon key={pokemon.id} pokemon={pokemon} />
+                            </Col>
                         )
                     }) 
                 }
