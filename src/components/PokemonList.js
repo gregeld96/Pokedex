@@ -5,7 +5,7 @@ import Pokemon from './Pokemon'
 function PokemonList ({ pokemons, error }) {
     return (  
         <>
-            <Row md={3} lg={3}>
+            <Row md={3} lg={4}>
                 
                 {   
                     pokemons && pokemons.map(pokemon => {

@@ -21,8 +21,9 @@ function Pokemon ({pokemon}) {
 
     if (url === '/favorites') {
         return (
-            <div className="d-flex flex-column my-5">
+            <div className="d-flex flex-column my-5 text-center">
                 <Image src={pokemon.imageUrl} className="pb-2 mx-auto"/>
+                <h3>{pokemon.name}</h3>
             </div>
         )
     }
