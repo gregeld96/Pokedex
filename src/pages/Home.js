@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PokemonList from '../components/PokemonList'
-import useFetch from '../hooks/useFetch'
 import Pagination from '../components/Pagination'
+import { useSelector, useDispatch } from 'react-redux'
+import { setPokemonAsync } from '../store/actions/pokemonAction'
 
 function Home () {
   
   const [page, setPage] = useState(1)
+  const dispatch = useDispatch()
+  const pokemons = useSelector(state => state.setPokemon.pokemons)
+  const loading = useSelector(state => state.setPokemon.loading)
 
-  const {data: pokemons, loading, error} = useFetch(`https://api.pokemontcg.io/v1/cards?page=${page}`, page)
+  useEffect (() => {
+    dispatch (setPokemonAsync(`https://api.pokemontcg.io/v1/cards?page=${page}`))
+  }, [page])
 
   const plus = () => {
     const newPage =  Number(page) + 1
@@ -22,7 +28,7 @@ function Home () {
   if (loading) return (<h1 className="text-center">Loading....</h1>)
   return (
     <>
-      <PokemonList pokemons={pokemons} error={error} loading={loading}></PokemonList>
+      <PokemonList pokemons={pokemons} loading={loading}></PokemonList>
       <Pagination minus={minus} plus={plus} page={page}></Pagination>
     </>
   )

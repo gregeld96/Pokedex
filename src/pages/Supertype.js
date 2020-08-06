@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PokemonList from '../components/PokemonList'
-import useFetch from '../hooks/useFetch'
 import Pagination from '../components/Pagination'
 import { useParams } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { setPokemonAsync } from '../store/actions/pokemonAction'
 
 function Supertype () {
 
@@ -22,7 +23,13 @@ function Supertype () {
     url = `https://api.pokemontcg.io/v1/cards?supertype=${supertype}&&page=${page}`
   }
 
-  const {data: pokemons, loading, error} = useFetch(url, page, supertype, name)
+  const dispatch = useDispatch()
+  const pokemons = useSelector(state => state.setPokemon.pokemons)
+  const loading = useSelector(state => state.setPokemon.loading)
+
+  useEffect (() => {
+    dispatch (setPokemonAsync(url))
+  }, [page, supertype, name])
 
   const plus = () => {
     const newPage =  Number(page) + 1
@@ -37,7 +44,7 @@ function Supertype () {
   if (loading) return (<h1 className="text-center">Loading....</h1>)
   return (
     <>
-      <PokemonList pokemons={pokemons} error={error} loading={loading} />
+      <PokemonList pokemons={pokemons} loading={loading} />
       <Pagination minus={minus} plus={plus} page={page} />
     </>
   )

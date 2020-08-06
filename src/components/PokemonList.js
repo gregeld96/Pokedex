@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import Pokemon from './Pokemon'
 
-function PokemonList ({ pokemons, error }) {
+function PokemonList ({ pokemons }) {
     return (  
         <>
             <Row md={3} lg={4}>
@@ -10,16 +10,13 @@ function PokemonList ({ pokemons, error }) {
                 {   
                     pokemons && pokemons.map(pokemon => {
                         return (
-                            <Col>
-                                <Pokemon key={pokemon.id} pokemon={pokemon} />
+                            <Col key={pokemon.id}>
+                                <Pokemon pokemon={pokemon} />
                             </Col>
                         )
                     }) 
                 }
             </Row>
-            {
-                error && <h4>{error.message}</h4>
-            }
         </>
     );
 }
