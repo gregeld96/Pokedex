@@ -26,6 +26,7 @@ function Home () {
   }
 
   if (loading) return (<h1 className="text-center">Loading....</h1>)
+  if (pokemons.length < 100) return (<PokemonList pokemons={pokemons}></PokemonList>)
   return (
     <>
       <PokemonList pokemons={pokemons} loading={loading}></PokemonList>

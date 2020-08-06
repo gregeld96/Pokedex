@@ -18,7 +18,7 @@ function Supertype () {
   const [page, setPage] = useState(1)
   
   if (supertype === null) {
-    url = `https://api.pokemontcg.io/v1/cards?name=${name}&&page=${page}`
+    url = `https://api.pokemontcg.io/v1/cards?name=${name}`
   } else {
     url = `https://api.pokemontcg.io/v1/cards?supertype=${supertype}&&page=${page}`
   }
@@ -42,6 +42,7 @@ function Supertype () {
   }
 
   if (loading) return (<h1 className="text-center">Loading....</h1>)
+  if (pokemons.length < 100) return (<PokemonList pokemons={pokemons}></PokemonList>)
   return (
     <>
       <PokemonList pokemons={pokemons} loading={loading} />

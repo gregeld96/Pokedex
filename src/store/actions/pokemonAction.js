@@ -1,4 +1,4 @@
-import { ADD_FAVOURITE_POKEMON, SET_POKEMONS } from "./types"
+import { ADD_FAVOURITE_POKEMON, SET_POKEMONS, SET_LOADING } from "./types"
 
 export const addFavouritePokemon = (pokemon) => {
     return {
@@ -14,8 +14,16 @@ export const setPokemon = (pokemons) => {
     }
 }
 
+export const setLoading = (status) => {
+    return {
+        type: SET_LOADING,
+        payload: status
+    }
+}
+
 export function setPokemonAsync (url) {
     return (dispatch) => {
+        dispatch(setLoading(true))
         fetch(url)
         .then(res => res.json())
         .then(responseData => {

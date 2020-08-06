@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom'
+import useDebounce from '../hooks/useBounce'
 
 function NavigationBar () {
     
@@ -15,7 +16,7 @@ function NavigationBar () {
         event.preventDefault()
         history.push(`/${searchInput}`)
     }
-
+    
     function superTypeLink (name) {
         history.push(`/${name}`)
     }
