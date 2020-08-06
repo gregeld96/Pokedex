@@ -1,17 +1,20 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Button, Image} from 'react-bootstrap';
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { addFavouritePokemon } from '../store/actions/pokemonAction'
 import { useRouteMatch } from 'react-router-dom'
+import { template } from '../App'
 
 function Pokemon ({pokemon}) {
 
     const dispatch = useDispatch()
     const history = useHistory()
     const { url } = useRouteMatch()
+    const { color, setColor } = useContext(template)
 
     function pokemonDetail (id) {
+        setColor("primary")
         history.push(`/pokemons/${id}`)
     }
 
@@ -31,7 +34,7 @@ function Pokemon ({pokemon}) {
     return (
         <div className="d-flex flex-column my-5">
             <Image src={pokemon.imageUrl} className="pb-2 mx-auto" onClick={() => pokemonDetail(pokemon.id)}/>
-            <Button className="w-50 mx-auto" onClick={() => addFavorite(pokemon)}>Favorite</Button>
+            <Button variant={`${color}`} className="w-50 mx-auto" onClick={() => addFavorite(pokemon)}>Favorite</Button>
         </div>
     )
 }
