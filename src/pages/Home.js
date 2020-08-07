@@ -25,13 +25,13 @@ function Home () {
     setPage(newPage)
   }
 
-  if (loading) return (<h1 className="text-center">Loading....</h1>)
+  if (loading) return (<h1 data-testid="loading" className="text-center">Loading....</h1>)
   if (pokemons.length < 100) return (<PokemonList pokemons={pokemons}></PokemonList>)
   return (
-    <>
+    <div data-testid="home">
       <PokemonList pokemons={pokemons} loading={loading}></PokemonList>
       <Pagination minus={minus} plus={plus} page={page}></Pagination>
-    </>
+    </div>
   )
 }
 

@@ -32,7 +32,7 @@ function Pokemon ({pokemon}) {
     }
 
     return (
-        <div className="d-flex flex-column my-5">
+        <div data-testid="image" className="d-flex flex-column my-5">
             <Image src={pokemon.imageUrl} className="pb-2 mx-auto" onClick={() => pokemonDetail(pokemon.id)}/>
             <Button variant={`${color}`} className="w-50 mx-auto" onClick={() => addFavorite(pokemon)}>Favorite</Button>
         </div>

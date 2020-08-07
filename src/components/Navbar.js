@@ -41,7 +41,7 @@ function NavigationBar () {
 
         return (  
             <>
-                <Navbar bg={`${headerColor}`} expand="lg" variant="dark" className="mb-3">
+                <Navbar data-testid="navbar" bg={`${headerColor}`} expand="lg" variant="dark" className="mb-3">
                     <Navbar.Brand onClick={() => home()}>Pokedex Master</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
